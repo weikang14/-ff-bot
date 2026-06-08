@@ -1,18 +1,24 @@
-# fly.toml — Fly.io 配置文件
-app = "ff-calendar-bot"       # 改成你想要的名字（全球唯一）
-primary_region = "sin"        # 新加坡节点，离马来西亚最近
+# fly.toml app configuration file generated for ffbot on 2026-06-08T03:39:06Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'ffbot'
+primary_region = 'ams'
 
 [build]
 
 [env]
-  TZ = "Asia/Kuala_Lumpur"
+  TZ = 'Asia/Kuala_Lumpur'
 
-# Bot 不需要 HTTP 服务，关掉即可
-[[services]]
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
-[checks]
-
-# 保持最少1个实例运行（不休眠）
 [[vm]]
-  size = "shared-cpu-1x"
-  memory = "256mb"
+  size = 'shared-cpu-1x'
+  memory = '256mb'
